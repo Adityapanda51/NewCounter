@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { increment, decrement } from './actions';
+import { increment, decrement, reset } from './actions';
 import './Counter.css';
 
-const Counter = ({ count, increment, decrement }) => {
+const Counter = ({ count, increment, decrement, reset }) => {
   const [countColor, setCountColor] = useState('black'); // Initial color
 
   const generateRandomColor = () => {
@@ -24,12 +24,22 @@ const Counter = ({ count, increment, decrement }) => {
     setCountColor(generateRandomColor()); // Set random color on decrement
   };
 
+  const handleReset = () => {
+    reset(); 
+    setCountColor('black'); 
+  };
+
+
+
   return (
     <div>
       <h1 className='heading'>Counter: <span style={{ color: countColor , marginLeft: '40px' }}>{count}</span></h1>
       <div className='counterBtn'>
         <button onClick={handleIncrement}>+</button>
         <button onClick={handleDecrement}>-</button>
+      </div>
+      <div className='resetBtn'>
+      <button onClick={handleReset}>Reset</button>
       </div>
     </div>
   );
@@ -41,7 +51,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   increment,
-  decrement
+  decrement,
+  reset
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
